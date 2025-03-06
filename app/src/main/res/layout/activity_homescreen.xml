@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Homescreen">
+
+    <TextView
+        android:id="@+id/tv_title_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="40dp"
+        android:text="Price"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
+    <TextView
+        android:id="@+id/tv_title_aboutchart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="About Chart"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:layout_marginTop="24dp"
+        app:layout_constraintStart_toStartOf="@+id/tv_title_price"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title_price" />
+
+    <TextView
+        android:id="@+id/tv_aboutchart_description"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="asdhasudhausdhausd"
+        android:layout_marginTop="16dp"
+        app:layout_constraintStart_toStartOf="@+id/tv_title_aboutchart"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title_aboutchart"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
