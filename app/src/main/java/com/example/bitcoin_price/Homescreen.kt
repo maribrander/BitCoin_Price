@@ -83,9 +83,10 @@ class Homescreen : AppCompatActivity() {
         // Conjunto de dados para o gráfico, como cor da linha, tamanho.
         val dataSet = LineDataSet(chartEntries, "Preço do Bitcoin").apply {
             color = ColorTemplate.COLORFUL_COLORS[0]
-            valueTextSize = 12f
+            valueTextSize = 16f
             setDrawCircles(false)
             setDrawValues(false)
+            setDrawFilled(true)
         }
 
         //atualiza com novos dados e redesenha.
