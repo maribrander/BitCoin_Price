@@ -62,6 +62,7 @@ class Homescreen : AppCompatActivity() {
 
     }
 
+    // Configurações inicias do Gráfico
     private fun setupChart() {
         chart.apply {
             description.isEnabled = false
@@ -72,12 +73,14 @@ class Homescreen : AppCompatActivity() {
         }
     }
 
+    // Atualiza o gráfico com novos dados recebidos da API
     private fun updateChart(values: List<MarketPriceValue>) {
         chartEntries.clear()
         values.forEachIndexed { index, data ->
             chartEntries.add(Entry(index.toFloat(), data.y.toFloat()))
         }
 
+        // Conjunto de dados para o gráfico, como cor da linha, tamanho.
         val dataSet = LineDataSet(chartEntries, "Preço do Bitcoin").apply {
             color = ColorTemplate.COLORFUL_COLORS[0]
             valueTextSize = 12f
@@ -85,6 +88,7 @@ class Homescreen : AppCompatActivity() {
             setDrawValues(false)
         }
 
+        //atualiza com novos dados e redesenha.
         chart.data = LineData(dataSet)
         chart.invalidate()
 
