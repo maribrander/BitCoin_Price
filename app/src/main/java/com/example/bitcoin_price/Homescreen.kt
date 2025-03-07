@@ -6,6 +6,7 @@ import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.bitcoin_price.data.MarketPriceValue
@@ -17,6 +18,7 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.utils.ColorTemplate
 import java.text.NumberFormat
 import java.util.Locale
+
 
 class Homescreen : AppCompatActivity() {
 
@@ -70,6 +72,13 @@ class Homescreen : AppCompatActivity() {
             axisRight.isEnabled = false
             axisLeft.setDrawGridLines(false)
             xAxis.setDrawGridLines(false)
+
+            //Configuração do marcador personalizado
+
+            val markerView = CustomMarkerView(context)
+
+            markerView.chartView = this
+            marker = markerView
         }
     }
 
@@ -84,9 +93,10 @@ class Homescreen : AppCompatActivity() {
         val dataSet = LineDataSet(chartEntries, "Preço do Bitcoin").apply {
             color = ColorTemplate.COLORFUL_COLORS[0]
             valueTextSize = 16f
-            setDrawCircles(false)
+            setDrawCircles(true)
             setDrawValues(false)
             setDrawFilled(true)
+
         }
 
         //atualiza com novos dados e redesenha.
