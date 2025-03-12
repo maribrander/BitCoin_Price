@@ -6,7 +6,7 @@ import retrofit2.http.GET
 // Responsável pelo endpoint da API, ou seja os dados que serão requisitados.
 
 interface BtcService {
-    @GET("/charts/market-price?timespan=4weeks&format=json")
+    @GET("/charts/mrket-price?timespan=4weeks&format=json")
      fun getMarketPrice(): Call<MarketPriceResponse>
 
 }

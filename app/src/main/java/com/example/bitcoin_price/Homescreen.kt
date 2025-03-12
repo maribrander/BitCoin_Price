@@ -1,15 +1,19 @@
 package com.example.bitcoin_price
 
 import android.annotation.SuppressLint
+import android.health.connect.datatypes.units.Percentage
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.bitcoin_price.data.MarketPriceValue
+import com.example.bitcoin_price.data.MarketPriceValueEntity
 import com.github.mikephil.charting.charts.LineChart
 import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
@@ -24,7 +28,15 @@ class Homescreen : AppCompatActivity() {
 
     private lateinit var chart: LineChart
     private val chartEntries = mutableListOf<Entry>()
-    private val viewModel: BtcViewModel by viewModels()
+    private val viewModel: BtcViewModel by viewModels{ BtcViewModel.factory(applicationContext)}
+
+    private lateinit var tvOpen: TextView
+    private lateinit var tvHigh: TextView
+    private lateinit var tvAverage: TextView
+    private lateinit var tvClose: TextView
+    private lateinit var tvLow: TextView
+    private lateinit var tvChange: TextView
+    private lateinit var tvPercentage: TextView
 
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,16 +54,17 @@ class Homescreen : AppCompatActivity() {
 
         val bitcoinPrice = findViewById<TextView>(R.id.tv_title_price)
         val aboutChart = findViewById<TextView>(R.id.tv_title_aboutchart)
-        val aboutChartDescription = findViewById<TextView>(R.id.tv_aboutchart_description)
+        tvOpen = findViewById<TextView>(R.id.tv_open)
+        tvHigh = findViewById<TextView>(R.id.tv_high)
+        tvAverage = findViewById<TextView>(R.id.tv_average)
+        tvClose = findViewById<TextView>(R.id.tv_close)
+        tvLow = findViewById<TextView>(R.id.tv_low)
+        tvChange = findViewById<TextView>(R.id.tv_change)
+        tvPercentage = findViewById<TextView>(R.id.tv_percentage)
 
-        viewModel.marketPrice.observe(this) { response ->
-            response?.let {
-                val latestPrice = it.values.lastOrNull()?.y ?: "Sem dados"
-                bitcoinPrice.text = "BitCoin: ${formatToUsd(latestPrice)}"
-                aboutChartDescription.text = it.description
-                updateChart(it.values)
-            }
-        }
+        //val aboutChartDescription = findViewById<TextView>(R.id.tv_aboutchart_description)
+
+
 
         viewModel.errorMessage.observe(this) { error ->
             error?.let {
@@ -59,8 +72,31 @@ class Homescreen : AppCompatActivity() {
             }
         }
 
+
+
+
         // Faz a requisição à API
         viewModel.fetchMarketPrice()
+
+
+       viewModel.localMarketPrice.observe(this) { localData ->
+            if (!localData.isNullOrEmpty()) {
+                bitcoinPrice.text = localData.last().price.toString()
+                val stats = calculateStats(localData)
+                updateScreen(stats)
+                updateChart(localData)
+            } else {
+                Log.d("RoomDatabase", "Nenhum dado local encontrado")
+            }
+       }
+
+        viewModel.marketPrice.observe(this) { apiData ->
+            if (!apiData.isNullOrEmpty()) {
+                val stats = calculateStats(apiData)
+                updateScreen(stats)
+                updateChart(apiData)
+            }
+        }
 
     }
 
@@ -83,10 +119,11 @@ class Homescreen : AppCompatActivity() {
     }
 
     // Atualiza o gráfico com novos dados recebidos da API
-    private fun updateChart(values: List<MarketPriceValue>) {
+    private fun updateChart(values: List<MarketPriceValueEntity>) {
         chartEntries.clear()
-        values.forEachIndexed { index, data ->
-            chartEntries.add(Entry(index.toFloat(), data.y.toFloat()))
+        val sortedValues = values.sortedBy { it.timestamp }
+        sortedValues.forEach { data ->
+            chartEntries.add(Entry(data.timestamp.toFloat(), data.price.toFloat()))
         }
 
         // Conjunto de dados para o gráfico, como cor da linha, tamanho.
@@ -105,6 +142,51 @@ class Homescreen : AppCompatActivity() {
 
 
     }
+
+    private fun calculateStats(values: List<MarketPriceValueEntity>): Map<String, Any> {
+        if (values.isEmpty()) {
+            return mapOf(
+                "Open" to "-",
+                "High" to "-",
+                "Average" to "-",
+                "Close" to "-",
+                "Low" to "-",
+                "Change" to "-"
+            )
+        }
+        val sortedValues = values.sortedBy { it.timestamp }
+        val open = sortedValues.first().price
+        val close = sortedValues.last().price
+        val high = sortedValues.maxOf { it.price }
+        val low = sortedValues.minOf { it.price }
+        val average = sortedValues.map { it.price}.average()
+        val change = ((close - open) / open) * 100
+
+        return mapOf(
+            "Open" to formatToUsd(open),
+            "High" to formatToUsd(high),
+            "Average" to formatToUsd(average),
+            "Close" to formatToUsd(close),
+            "Low" to formatToUsd(low),
+            "Change" to "$$change%",
+            "Percentage" to "%.2f%%".format(change)
+        )
+
+    }
+
+    private fun updateScreen(stats: Map<String, Any>){
+        tvOpen.text = stats["Open"].toString()
+        tvHigh.text = stats["High"].toString()
+        tvAverage.text = stats["Average"].toString()
+        tvClose.text = stats["Close"].toString()
+        tvLow.text = stats["Low"].toString()
+        tvChange.text = stats["Change"].toString()
+        tvPercentage.text = stats["Percentage"].toString()
+
+    }
+
+
+
 
     fun formatToUsd(value: Comparable<*>): String {
         val format = NumberFormat.getCurrencyInstance(Locale.US)
