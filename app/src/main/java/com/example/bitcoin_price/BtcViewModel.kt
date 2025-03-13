@@ -37,12 +37,16 @@ class BtcViewModel( private val repository: BtcRepository): ViewModel() {
     }
 
     fun filterData (days: Int){
-        val allData = _marketPrice.value ?: return
-        val currentTime = System.currentTimeMillis() / 1000
-        val timeLimit = currentTime - (days * 24 * 60 * 60)
+        val now = System.currentTimeMillis() / 1000
 
-        val filteredData = allData.filter {it.timestamp >= timeLimit}
-        _filteredData.postValue(filteredData)
+        // Adiciona +1 dia para garantir dados
+        val startTime = now - ((days + 1) * 86400)
+
+        val filtered = localMarketPrice.value?.filter {
+            it.timestamp in startTime..now
+        }
+
+        _marketPrice.postValue(filtered)
     }
 
 
