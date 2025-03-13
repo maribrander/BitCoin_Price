@@ -22,6 +22,9 @@ class BtcViewModel( private val repository: BtcRepository): ViewModel() {
 
     val localMarketPrice: LiveData<List<MarketPriceValueEntity>> = repository.getLocaldMarketPrice()
 
+    private val _filteredData = MutableLiveData<List<MarketPriceValueEntity>>()
+    val filteredData: LiveData<List<MarketPriceValueEntity>> get() = _filteredData
+
     fun fetchMarketPrice() {
         repository.fetchMarketPrice { response, error ->
             if (response != null) {
@@ -31,6 +34,15 @@ class BtcViewModel( private val repository: BtcRepository): ViewModel() {
                 _errorMessage.postValue(error)
             }
         }
+    }
+
+    fun filterData (days: Int){
+        val allData = _marketPrice.value ?: return
+        val currentTime = System.currentTimeMillis() / 1000
+        val timeLimit = currentTime - (days * 24 * 60 * 60)
+
+        val filteredData = allData.filter {it.timestamp >= timeLimit}
+        _filteredData.postValue(filteredData)
     }
 
 
