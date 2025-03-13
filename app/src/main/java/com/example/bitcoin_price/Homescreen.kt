@@ -6,6 +6,7 @@ import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
@@ -45,6 +46,7 @@ class Homescreen : AppCompatActivity() {
     private lateinit var imArrowUp: ImageView
 
 
+
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -61,6 +63,11 @@ class Homescreen : AppCompatActivity() {
 
         val bitcoinPrice = findViewById<TextView>(R.id.tv_title_price)
         val aboutChart = findViewById<TextView>(R.id.tv_title_aboutchart)
+        val aboutChartDescription = findViewById<TextView>(R.id.tv_aboutchart_description)
+        val btn1D = findViewById<TextView>(R.id.tv_one_day)
+        val btn7D = findViewById<TextView>(R.id.tv_seven_days)
+        val btn30D = findViewById<TextView>(R.id.tv_thirty_days)
+
         tvOpen = findViewById<TextView>(R.id.tv_open)
         tvHigh = findViewById<TextView>(R.id.tv_high)
         tvAverage = findViewById<TextView>(R.id.tv_average)
@@ -80,7 +87,7 @@ class Homescreen : AppCompatActivity() {
 
 
 
-        val aboutChartDescription = findViewById<TextView>(R.id.tv_aboutchart_description)
+
 
 
         // Faz a requisição à API
@@ -138,6 +145,23 @@ class Homescreen : AppCompatActivity() {
             }
         }
 
+        viewModel.filteredData.observe(this){ data ->
+            if(!data.isNullOrEmpty()){
+                updateChart(data)
+                updatePriceDetails(data)
+            } else {
+                Toast.makeText(this, "Sem dados disponíveis", Toast.LENGTH_SHORT).show()
+            }
+
+        }
+
+        btn1D.setOnClickListener { onFilterSelected(1) }
+        btn7D.setOnClickListener { onFilterSelected(7) }
+        btn30D.setOnClickListener { onFilterSelected(30) }
+    }
+
+    fun onFilterSelected(days: Int) {
+        viewModel.filterData(days)
     }
 
     // Configurações inicias do Gráfico
@@ -227,6 +251,37 @@ class Homescreen : AppCompatActivity() {
         tvPercentage.text = stats["Percentage"].toString()
         imArrowDown.setImageResource(stats["Arrow"] as Int)
         imArrowUp.setImageResource(stats["Arrow"] as Int)
+
+    }
+
+    private fun updatePriceDetails(data: List<MarketPriceValueEntity>){
+        if(data.isEmpty()) return
+
+        val openingPrice = data.first().price
+        val closingPrice = data.last().price
+        val highestPrice = data.maxOf { it.price }
+        val lowestPrice = data.minOf { it.price }
+        val averagePrice = data.map {it.price}.average()
+
+        val changePercent = if (openingPrice != 0.0){
+            ((closingPrice - openingPrice) / openingPrice) * 100
+        } else {
+            0.0
+        }
+
+        val openingPriceTextView = findViewById<TextView>(R.id.tv_open)
+        val closingPriceTextView = findViewById<TextView>(R.id.tv_close)
+        val highestPriceTextView = findViewById<TextView>(R.id.tv_high)
+        val lowestPriceTextView = findViewById<TextView>(R.id.tv_low)
+        val averagePriceTextView = findViewById<TextView>(R.id.tv_average)
+        val changePercentTextView  = findViewById<TextView>(R.id.tv_change)
+
+        openingPriceTextView.text = " ${formatToUsd(openingPrice)}"
+        closingPriceTextView.text = " ${formatToUsd(closingPrice)}"
+        highestPriceTextView.text = " ${formatToUsd(highestPrice)}"
+        lowestPriceTextView.text = "  ${formatToUsd(lowestPrice)}"
+        averagePriceTextView.text = "${formatToUsd(averagePrice)}"
+        changePercentTextView.text = "${formatToUsd(changePercent)}" 
 
     }
 
