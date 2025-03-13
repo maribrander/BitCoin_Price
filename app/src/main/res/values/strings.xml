@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">BitCoin_Price</string>
+    <string name="empty_message">Sorry. We are having some issues to display the data. Please, try to refresh the page!</string>
 </resources>

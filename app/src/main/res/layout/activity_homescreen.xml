@@ -7,26 +7,45 @@
     android:layout_height="match_parent"
     tools:context=".Homescreen">
 
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/data_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:constraint_referenced_ids="tv_aboutchart_description,tv_title_price_label,tv_title_price,tv_one_day,tv_seven_days,tv_thirty_days,tv_sixty_days,tv_ninety_days,tv_one_year,tv_percentage, im_arrow_down, im_arrow_up,chart,tv_price_label,tv_open_label,tv_high_label,tv_average_label,tv_open,tv_high,tv_average,vertical_guideline,tv_close_label,tv_low_label,tv_change_label,tv_close,tv_low,tv_change,tv_title_aboutchart" />
+
+    <TextView
+        android:id="@+id/tv_aboutchart_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:text="Average USD market price across major Bitcoin exchanges."
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title_aboutchart" />
+
     <TextView
         android:id="@+id/tv_title_price_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:layout_marginTop="24dp"
+        android:text="BitCoin(BTC)"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="BitCoin(BTC)" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
         android:id="@+id/tv_title_price"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
+        android:background="@drawable/selector_textview_background"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_title_price_label"
-        android:background="@drawable/selector_textview_background"
         tools:text="$68,837.59" />
 
     <TextView
@@ -34,111 +53,173 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="40dp"
-        android:textStyle="bold"
         android:layout_marginTop="16dp"
-        app:layout_constraintStart_toStartOf="@id/tv_title_price"
-        app:layout_constraintTop_toBottomOf="@id/tv_title_price"
         android:background="@drawable/selector_textview_background"
         android:clickable="true"
         android:focusable="true"
-        android:text="1d" />
+        android:text="1d"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="@id/tv_title_price"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_price" />
 
     <TextView
         android:id="@+id/tv_seven_days"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:textStyle="bold"
         android:layout_marginTop="16dp"
-        app:layout_constraintStart_toEndOf="@id/tv_one_day"
-        app:layout_constraintTop_toBottomOf="@id/tv_title_price"
         android:background="@drawable/selector_textview_background"
         android:clickable="true"
         android:focusable="true"
-        android:text="7d" />
+        android:text="7d"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/tv_one_day"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_price" />
 
     <TextView
         android:id="@+id/tv_thirty_days"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:textStyle="bold"
         android:layout_marginTop="16dp"
-        app:layout_constraintStart_toEndOf="@id/tv_seven_days"
-        app:layout_constraintTop_toBottomOf="@id/tv_title_price"
         android:background="@drawable/selector_textview_background"
         android:clickable="true"
         android:focusable="true"
-        android:text="30d" />
+        android:text="30d"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/tv_seven_days"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_price" />
 
     <TextView
         android:id="@+id/tv_sixty_days"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:textStyle="bold"
         android:layout_marginTop="16dp"
-        app:layout_constraintStart_toEndOf="@id/tv_thirty_days"
-        app:layout_constraintTop_toBottomOf="@id/tv_title_price"
         android:background="@drawable/selector_textview_background"
         android:clickable="true"
         android:focusable="true"
-        android:text="60d" />
+        android:text="60d"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/tv_thirty_days"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_price" />
 
     <TextView
         android:id="@+id/tv_ninety_days"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:textStyle="bold"
         android:layout_marginTop="16dp"
-        app:layout_constraintStart_toEndOf="@id/tv_sixty_days"
-        app:layout_constraintTop_toBottomOf="@id/tv_title_price"
         android:background="@drawable/selector_textview_background"
         android:clickable="true"
         android:focusable="true"
-        android:text="90d" />
+        android:text="90d"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/tv_sixty_days"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_price" />
 
     <TextView
         android:id="@+id/tv_one_year"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="32dp"
-        android:textStyle="bold"
         android:layout_marginTop="16dp"
-        app:layout_constraintStart_toEndOf="@id/tv_ninety_days"
-        app:layout_constraintTop_toBottomOf="@id/tv_title_price"
         android:background="@drawable/selector_textview_background"
         android:clickable="true"
         android:focusable="true"
-        android:text="1y" />
+        android:text="1y"
+        android:textStyle="bold"
+        app:layout_constraintStart_toEndOf="@id/tv_ninety_days"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_price" />
 
     <TextView
         android:id="@+id/tv_percentage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="16sp"
-        android:textStyle="bold"
         android:layout_marginTop="32dp"
         android:layout_marginEnd="24dp"
+        android:textSize="16sp"
+        android:textStyle="bold"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:text="41.78%" />
+
+    <ImageView
+        android:id="@+id/im_arrow_down"
+        android:layout_width="47dp"
+        android:layout_height="49dp"
+        android:layout_marginEnd="50dp"
+        android:src="@drawable/ic_arrow_down"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_percentage"
+        app:layout_constraintEnd_toEndOf="@+id/tv_percentage"
+        app:layout_constraintTop_toTopOf="@+id/tv_percentage" />
+
+    <ImageView
+        android:id="@+id/im_arrow_up"
+        android:layout_width="47dp"
+        android:layout_height="49dp"
+        android:layout_marginEnd="50dp"
+        android:src="@drawable/ic_arrow_up"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_percentage"
+        app:layout_constraintEnd_toEndOf="@+id/tv_percentage"
+        app:layout_constraintTop_toTopOf="@+id/tv_percentage" />
 
     <com.github.mikephil.charting.charts.LineChart
         android:id="@+id/chart"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-        android:layout_margin="16dp"
-        app:layout_constraintTop_toBottomOf="@id/tv_one_day"
-        tools:layout_editor_absoluteX="16dp" />
+
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_one_day" />
+
+
+
+    <TextView
+        android:id="@+id/tv_empty_message"
+        android:layout_marginTop="120dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/empty_message"
+        android:textAlignment="center"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/im_empty_State"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_empty_state"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
+
+
+    <Button
+        android:id="@+id/bt_retry"
+        android:layout_marginBottom="100dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/black"
+        android:text="RETRY"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
         android:id="@+id/tv_price_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
         android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
         android:text="Price"
         android:textSize="24sp"
         android:textStyle="bold"
@@ -149,8 +230,8 @@
         android:id="@+id/tv_open_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Open"
         android:layout_marginTop="16dp"
+        android:text="Open"
         app:layout_constraintStart_toStartOf="@+id/tv_price_label"
         app:layout_constraintTop_toBottomOf="@+id/tv_price_label" />
 
@@ -158,8 +239,8 @@
         android:id="@+id/tv_high_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="High"
         android:layout_marginTop="16dp"
+        android:text="High"
         app:layout_constraintStart_toStartOf="@+id/tv_price_label"
         app:layout_constraintTop_toBottomOf="@+id/tv_open_label" />
 
@@ -167,8 +248,8 @@
         android:id="@+id/tv_average_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Average"
         android:layout_marginTop="16dp"
+        android:text="Average"
         app:layout_constraintStart_toStartOf="@+id/tv_price_label"
         app:layout_constraintTop_toBottomOf="@+id/tv_high_label" />
 
@@ -178,32 +259,32 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        tools:text="$0"
         android:maxLength="11"
         app:layout_constraintEnd_toStartOf="@+id/vertical_guideline"
-        app:layout_constraintTop_toBottomOf="@+id/tv_price_label" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_price_label"
+        tools:text="$0" />
 
     <TextView
         android:id="@+id/tv_high"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="$0"
-        android:maxLength="11"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:maxLength="11"
         app:layout_constraintEnd_toStartOf="@+id/vertical_guideline"
-        app:layout_constraintTop_toBottomOf="@+id/tv_open" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_open"
+        tools:text="$0" />
 
     <TextView
         android:id="@+id/tv_average"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="$0"
-        android:maxLength="11"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:maxLength="11"
         app:layout_constraintEnd_toStartOf="@+id/vertical_guideline"
-        app:layout_constraintTop_toBottomOf="@+id/tv_high" />
+        app:layout_constraintTop_toBottomOf="@+id/tv_high"
+        tools:text="$0" />
 
     <androidx.constraintlayout.widget.Guideline
         android:id="@+id/vertical_guideline"
@@ -217,9 +298,9 @@
         android:id="@+id/tv_close_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Close"
-        android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Close"
         app:layout_constraintStart_toEndOf="@id/vertical_guideline"
         app:layout_constraintTop_toBottomOf="@+id/tv_price_label" />
 
@@ -227,9 +308,9 @@
         android:id="@+id/tv_low_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Low"
-        android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Low"
         app:layout_constraintStart_toEndOf="@id/vertical_guideline"
         app:layout_constraintTop_toBottomOf="@+id/tv_open_label" />
 
@@ -237,9 +318,9 @@
         android:id="@+id/tv_change_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Change"
-        android:layout_marginTop="16dp"
         android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Change"
         app:layout_constraintStart_toEndOf="@id/vertical_guideline"
         app:layout_constraintTop_toBottomOf="@+id/tv_high_label" />
 
@@ -249,57 +330,44 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
-        tools:text="$0"
         android:maxLength="11"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_price_label"
-        app:layout_constraintEnd_toEndOf="parent" />
+        tools:text="$0" />
 
     <TextView
         android:id="@+id/tv_low"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="$0"
-        android:maxLength="11"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:maxLength="11"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_close"/>
+        app:layout_constraintTop_toBottomOf="@id/tv_close"
+        tools:text="$0" />
 
     <TextView
         android:id="@+id/tv_change"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        tools:text="$0"
-        android:maxLength="11"
         android:layout_marginTop="16dp"
         android:layout_marginEnd="16dp"
+        android:maxLength="11"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_low"/>
+        app:layout_constraintTop_toBottomOf="@id/tv_low"
+        tools:text="$0" />
 
     <TextView
         android:id="@+id/tv_title_aboutchart"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
         android:text="About Chart"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:layout_marginTop="16dp"
-        android:layout_marginStart="24dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_average_label" />
-
-    <TextView
-        android:id="@+id/tv_aboutchart_description"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Average USD market price across major Bitcoin exchanges."
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginTop="16dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_title_aboutchart" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
