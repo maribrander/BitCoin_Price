@@ -12,6 +12,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.Group
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.bitcoin_price.data.MarketPriceValueEntity
@@ -29,7 +30,7 @@ class Homescreen : AppCompatActivity() {
 
     private lateinit var chart: LineChart
     private val chartEntries = mutableListOf<Entry>()
-    private val viewModel: BtcViewModel by viewModels{ BtcViewModel.factory(applicationContext)}
+    private val viewModel: BtcViewModel by viewModels { BtcViewModel.factory(applicationContext) }
 
     private lateinit var tvOpen: TextView
     private lateinit var tvHigh: TextView
@@ -44,7 +45,6 @@ class Homescreen : AppCompatActivity() {
     private lateinit var tvEmptyMessage: TextView
     private lateinit var imArrowDown: ImageView
     private lateinit var imArrowUp: ImageView
-
 
 
     @SuppressLint("SetTextI18n")
@@ -83,18 +83,11 @@ class Homescreen : AppCompatActivity() {
         imArrowUp = findViewById<ImageView>(R.id.im_arrow_up)
 
 
-
-
-
-
-
-
-
         // Faz a requisição à API
         viewModel.fetchMarketPrice()
 
-       // Busca os dados do banco de dados pra exibir na ui se houver dados.
-       viewModel.localMarketPrice.observe(this) { localData ->
+        // Busca os dados do banco de dados pra exibir na ui se houver dados.
+        viewModel.localMarketPrice.observe(this) { localData ->
             if (!localData.isNullOrEmpty()) {
                 val bitcoinPriceConverter = localData.last().price
                 bitcoinPrice.text = formatToUsd(bitcoinPriceConverter)
@@ -115,7 +108,7 @@ class Homescreen : AppCompatActivity() {
                 }
                 tvEmptyMessage.visibility = View.VISIBLE
             }
-       }
+        }
 
         // Atualiza a UI com os dados da API
         viewModel.marketPrice.observe(this) { apiData ->
@@ -129,10 +122,12 @@ class Homescreen : AppCompatActivity() {
 
         viewModel.errorMessage.observe(this) { error ->
             error?.let {
-                val builder : AlertDialog.Builder = AlertDialog.Builder(this)
+                val builder: AlertDialog.Builder = AlertDialog.Builder(this)
                 builder.setTitle(" Ops! Something went wrong")
-                builder.setMessage("We could not establish a connection with our server." +
-                        " If you want to see outdated data, you can cancel or try the connection again! ")
+                builder.setMessage(
+                    "We could not establish a connection with our server." +
+                            " If you want to see outdated data, you can cancel or try the connection again! "
+                )
                 builder.setIcon(R.drawable.ic_wifi)
                 builder.setPositiveButton("Try Again") { dialog, _ ->
                     viewModel.fetchMarketPrice()
@@ -140,13 +135,13 @@ class Homescreen : AppCompatActivity() {
                 builder.setNegativeButton("Cancel") { dialog, _ ->
                     dialog.dismiss()
                 }
-                val dialog : AlertDialog = builder.create()
+                val dialog: AlertDialog = builder.create()
                 dialog.show()
             }
         }
 
-        viewModel.filteredData.observe(this){ data ->
-            if(!data.isNullOrEmpty()){
+        viewModel.filteredData.observe(this) { data ->
+            if (!data.isNullOrEmpty()) {
                 updateChart(data)
                 updatePriceDetails(data)
             } else {
@@ -224,7 +219,7 @@ class Homescreen : AppCompatActivity() {
         val close = sortedValues.last().price
         val high = sortedValues.maxOf { it.price }
         val low = sortedValues.minOf { it.price }
-        val average = sortedValues.map { it.price}.average()
+        val average = sortedValues.map { it.price }.average()
         val change = ((close - open) / open) * 100
         val arrow = if (change > 0) R.drawable.ic_arrow_up else R.drawable.ic_arrow_down
 
@@ -241,7 +236,7 @@ class Homescreen : AppCompatActivity() {
 
     }
 
-    private fun updateScreen(stats: Map<String, Any>){
+    private fun updateScreen(stats: Map<String, Any>) {
         tvOpen.text = stats["Open"].toString()
         tvHigh.text = stats["High"].toString()
         tvAverage.text = stats["Average"].toString()
@@ -254,16 +249,16 @@ class Homescreen : AppCompatActivity() {
 
     }
 
-    private fun updatePriceDetails(data: List<MarketPriceValueEntity>){
-        if(data.isEmpty()) return
+    private fun updatePriceDetails(data: List<MarketPriceValueEntity>) {
+        if (data.isEmpty()) return
 
         val openingPrice = data.first().price
         val closingPrice = data.last().price
         val highestPrice = data.maxOf { it.price }
         val lowestPrice = data.minOf { it.price }
-        val averagePrice = data.map {it.price}.average()
+        val averagePrice = data.map { it.price }.average()
 
-        val changePercent = if (openingPrice != 0.0){
+        val changePercent = if (openingPrice != 0.0) {
             ((closingPrice - openingPrice) / openingPrice) * 100
         } else {
             0.0
@@ -274,18 +269,16 @@ class Homescreen : AppCompatActivity() {
         val highestPriceTextView = findViewById<TextView>(R.id.tv_high)
         val lowestPriceTextView = findViewById<TextView>(R.id.tv_low)
         val averagePriceTextView = findViewById<TextView>(R.id.tv_average)
-        val changePercentTextView  = findViewById<TextView>(R.id.tv_change)
+        val changePercentTextView = findViewById<TextView>(R.id.tv_change)
 
         openingPriceTextView.text = " ${formatToUsd(openingPrice)}"
         closingPriceTextView.text = " ${formatToUsd(closingPrice)}"
         highestPriceTextView.text = " ${formatToUsd(highestPrice)}"
         lowestPriceTextView.text = "  ${formatToUsd(lowestPrice)}"
         averagePriceTextView.text = "${formatToUsd(averagePrice)}"
-        changePercentTextView.text = "${formatToUsd(changePercent)}" 
+        changePercentTextView.text = "${formatToUsd(changePercent)}"
 
     }
-
-
 
 
     fun formatToUsd(value: Comparable<*>): String {

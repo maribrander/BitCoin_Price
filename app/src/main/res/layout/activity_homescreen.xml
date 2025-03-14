@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="visible"
-        app:constraint_referenced_ids="tv_aboutchart_description,tv_title_price_label,tv_title_price,tv_one_day,tv_seven_days,tv_thirty_days,tv_sixty_days,tv_ninety_days,tv_one_year,tv_percentage, im_arrow_down, im_arrow_up,chart,tv_price_label,tv_open_label,tv_high_label,tv_average_label,tv_open,tv_high,tv_average,vertical_guideline,tv_close_label,tv_low_label,tv_change_label,tv_close,tv_low,tv_change,tv_title_aboutchart" />
+        app:constraint_referenced_ids="tv_aboutchart_description,tv_title_price_label,tv_title_price,tv_one_day,tv_seven_days,tv_thirty_days,tv_percentage, im_arrow_down, im_arrow_up,chart,tv_price_label,tv_open_label,tv_high_label,tv_average_label,tv_open,tv_high,tv_average,vertical_guideline,tv_close_label,tv_low_label,tv_change_label,tv_close,tv_low,tv_change,tv_title_aboutchart" />
 
     <TextView
         android:id="@+id/tv_aboutchart_description"
@@ -52,7 +52,7 @@
         android:id="@+id/tv_one_day"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="40dp"
+        android:layout_marginStart="112dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/selector_textview_background"
         android:clickable="true"
@@ -66,7 +66,7 @@
         android:id="@+id/tv_seven_days"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="48dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/selector_textview_background"
         android:clickable="true"
@@ -80,7 +80,7 @@
         android:id="@+id/tv_thirty_days"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="48dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/selector_textview_background"
         android:clickable="true"
@@ -88,48 +88,6 @@
         android:text="30d"
         android:textStyle="bold"
         app:layout_constraintStart_toEndOf="@id/tv_seven_days"
-        app:layout_constraintTop_toBottomOf="@id/tv_title_price" />
-
-    <TextView
-        android:id="@+id/tv_sixty_days"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/selector_textview_background"
-        android:clickable="true"
-        android:focusable="true"
-        android:text="60d"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@id/tv_thirty_days"
-        app:layout_constraintTop_toBottomOf="@id/tv_title_price" />
-
-    <TextView
-        android:id="@+id/tv_ninety_days"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/selector_textview_background"
-        android:clickable="true"
-        android:focusable="true"
-        android:text="90d"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@id/tv_sixty_days"
-        app:layout_constraintTop_toBottomOf="@id/tv_title_price" />
-
-    <TextView
-        android:id="@+id/tv_one_year"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/selector_textview_background"
-        android:clickable="true"
-        android:focusable="true"
-        android:text="1y"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@id/tv_ninety_days"
         app:layout_constraintTop_toBottomOf="@id/tv_title_price" />
 
     <TextView
@@ -168,21 +126,21 @@
         android:id="@+id/chart"
         android:layout_width="match_parent"
         android:layout_height="300dp"
-
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_one_day" />
 
-
-
     <TextView
         android:id="@+id/tv_empty_message"
-        android:layout_marginTop="120dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="120dp"
+        android:layout_marginEnd="8dp"
         android:text="@string/empty_message"
         android:textAlignment="center"
         android:textSize="20sp"
@@ -202,12 +160,11 @@
         app:layout_constraintStart_toStartOf="parent"
         tools:ignore="MissingConstraints" />
 
-
     <Button
         android:id="@+id/bt_retry"
-        android:layout_marginBottom="100dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="100dp"
         android:backgroundTint="@color/black"
         android:text="RETRY"
         app:layout_constraintBottom_toBottomOf="parent"

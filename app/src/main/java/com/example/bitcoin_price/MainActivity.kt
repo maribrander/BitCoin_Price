@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.widget.ImageView
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -21,5 +22,19 @@ class MainActivity : AppCompatActivity() {
             finish()
         }, 3000)
 
+        val splashLogo: ImageView = findViewById(R.id.logo_bitcoin)
+
+        val currentNightMode = resources.configuration.uiMode and
+                android.content.res.Configuration.UI_MODE_NIGHT_MASK
+
+        when (currentNightMode) {
+            android.content.res.Configuration.UI_MODE_NIGHT_YES -> {
+                splashLogo.setImageResource(R.drawable.logo_darkmode)
+            }
+            android.content.res.Configuration.UI_MODE_NIGHT_NO -> {
+                splashLogo.setImageResource(R.drawable.logo_lightmode)
+            }
+
+        }
     }
 }
