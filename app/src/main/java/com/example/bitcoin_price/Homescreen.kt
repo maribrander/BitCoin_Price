@@ -15,6 +15,7 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.Group
+import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.bitcoin_price.data.MarketPriceValueEntity
@@ -23,9 +24,13 @@ import com.github.mikephil.charting.components.XAxis
 import com.github.mikephil.charting.data.Entry
 import com.github.mikephil.charting.data.LineData
 import com.github.mikephil.charting.data.LineDataSet
+import com.github.mikephil.charting.formatter.ValueFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import java.text.NumberFormat
+import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.Locale
+
 
 class Homescreen : AppCompatActivity() {
 
@@ -141,7 +146,8 @@ class Homescreen : AppCompatActivity() {
         viewModel.filteredData.observe(this) { data ->
             if (!data.isNullOrEmpty()) {
                 updateChart(data)
-                updatePriceDetails(data)
+                val stats = calculateStats(data)
+                updateScreen(stats)
             } else {
                 Toast.makeText(this, "Sem dados disponíveis", Toast.LENGTH_SHORT).show()
             }
@@ -175,7 +181,26 @@ class Homescreen : AppCompatActivity() {
             axisRight.isEnabled = false
             axisLeft.setDrawGridLines(true)
             xAxis.setDrawGridLines(false)
-            xAxis.setDrawLabels(false)
+            xAxis.setDrawLabels(true)
+
+            xAxis.valueFormatter = object : ValueFormatter() {
+                private val sdf = SimpleDateFormat("dd/MM", Locale.getDefault())
+
+                override fun getFormattedValue(value: Float): String {
+                    return sdf.format(Date(value.toLong() * 1000))
+                }
+            }
+
+// Define a quantidade de rótulos visíveis
+            xAxis.setLabelCount(5, true)
+            axisLeft.enableGridDashedLine(10f,5f, 0f)
+            chart.axisLeft.apply {
+                setDrawGridLines(true)
+                enableGridDashedLine(10f, 5f, 0f)
+                gridColor = Color.LTGRAY
+                gridLineWidth = 1f
+            }
+
 
             val isDarkMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
 
@@ -205,11 +230,16 @@ class Homescreen : AppCompatActivity() {
 
         // Conjunto de dados para o gráfico, como cor da linha, tamanho.
         val dataSet = LineDataSet(chartEntries, "Bitcoin Price").apply {
-            color = ColorTemplate.COLORFUL_COLORS[0]
+            color = Color.parseColor("#4682B4")
             valueTextSize = 16f
-            setDrawCircles(true)
+            setDrawCircles(false)
             setDrawValues(false)
             setDrawFilled(true)
+
+            lineWidth = 3f
+            mode =  LineDataSet.Mode.HORIZONTAL_BEZIER
+            cubicIntensity = 0.3f
+            fillDrawable = ContextCompat.getDrawable(chart.context, R.drawable.gradient_fill)
         }
 
         //atualiza com novos dados e redesenha.
@@ -261,37 +291,6 @@ class Homescreen : AppCompatActivity() {
         tvPercentage.text = stats["Percentage"].toString()
         imArrowDown.setImageResource(stats["Arrow"] as Int)
         imArrowUp.setImageResource(stats["Arrow"] as Int)
-
-    }
-
-    private fun updatePriceDetails(data: List<MarketPriceValueEntity>) {
-        if (data.isEmpty()) return
-
-        val openingPrice = data.first().price
-        val closingPrice = data.last().price
-        val highestPrice = data.maxOf { it.price }
-        val lowestPrice = data.minOf { it.price }
-        val averagePrice = data.map { it.price }.average()
-
-        val changePercent = if (openingPrice != 0.0) {
-            ((closingPrice - openingPrice) / openingPrice) * 100
-        } else {
-            0.0
-        }
-
-        val openingPriceTextView = findViewById<TextView>(R.id.tv_open)
-        val closingPriceTextView = findViewById<TextView>(R.id.tv_close)
-        val highestPriceTextView = findViewById<TextView>(R.id.tv_high)
-        val lowestPriceTextView = findViewById<TextView>(R.id.tv_low)
-        val averagePriceTextView = findViewById<TextView>(R.id.tv_average)
-        val changePercentTextView = findViewById<TextView>(R.id.tv_change)
-
-        openingPriceTextView.text = " ${formatToUsd(openingPrice)}"
-        closingPriceTextView.text = " ${formatToUsd(closingPrice)}"
-        highestPriceTextView.text = " ${formatToUsd(highestPrice)}"
-        lowestPriceTextView.text = "  ${formatToUsd(lowestPrice)}"
-        averagePriceTextView.text = "${formatToUsd(averagePrice)}"
-        changePercentTextView.text = "${formatToUsd(changePercent)}"
 
     }
 

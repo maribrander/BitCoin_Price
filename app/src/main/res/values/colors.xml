@@ -8,4 +8,9 @@
         <color name="border_color">#CCCCCC</color>
         <color name="selected_button">#000000</color>
         <color name="selected_text_color">#FFFFFF</color>
+
+    <color name="blue_light">#80D8FF</color>
+    <color name="blue_medium">#0091EA</color>
+    <color name="blue_dark">#01579B</color>
+
 </resources>
