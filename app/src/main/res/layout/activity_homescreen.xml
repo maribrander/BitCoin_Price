@@ -12,7 +12,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="visible"
-        app:constraint_referenced_ids="tv_aboutchart_description,tv_title_price_label,tv_title_price,tv_one_day,tv_seven_days,tv_thirty_days,tv_percentage, im_arrow_down, im_arrow_up,chart,tv_price_label,tv_open_label,tv_high_label,tv_average_label,tv_open,tv_high,tv_average,vertical_guideline,tv_close_label,tv_low_label,tv_change_label,tv_close,tv_low,tv_change,tv_title_aboutchart" />
+        app:constraint_referenced_ids="tv_aboutchart_description,tv_title_price_label,tv_title_price,radioGroup,tv_percentage, im_arrow_down, im_arrow_up,cv_chart,tv_price_label,tv_open_label,tv_high_label,tv_average_label,tv_open,tv_high,tv_average,vertical_guideline,tv_close_label,tv_low_label,tv_change_label,tv_close,tv_low,tv_change,tv_title_aboutchart" />
 
     <TextView
         android:id="@+id/tv_aboutchart_description"
@@ -41,54 +41,40 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
-        android:background="@drawable/selector_textview_background"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_title_price_label"
         tools:text="$68,837.59" />
 
-    <TextView
-        android:id="@+id/tv_one_day"
+    <RadioGroup xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/radioGroup"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="112dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/selector_textview_background"
-        android:clickable="true"
-        android:focusable="true"
-        android:text="1d"
-        android:textStyle="bold"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:layout_marginStart="84dp"
         app:layout_constraintStart_toStartOf="@id/tv_title_price"
-        app:layout_constraintTop_toBottomOf="@id/tv_title_price" />
+        app:layout_constraintTop_toBottomOf="@id/tv_title_price">
 
-    <TextView
-        android:id="@+id/tv_seven_days"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/selector_textview_background"
-        android:clickable="true"
-        android:focusable="true"
-        android:text="7d"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@id/tv_one_day"
-        app:layout_constraintTop_toBottomOf="@id/tv_title_price" />
+        <RadioButton
+            android:id="@+id/btn1d"
+            style="@style/FilterButtonStyle"
+            android:text="1d" />
 
-    <TextView
-        android:id="@+id/tv_thirty_days"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="48dp"
-        android:layout_marginTop="16dp"
-        android:background="@drawable/selector_textview_background"
-        android:clickable="true"
-        android:focusable="true"
-        android:text="30d"
-        android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@id/tv_seven_days"
-        app:layout_constraintTop_toBottomOf="@id/tv_title_price" />
+        <RadioButton
+            android:id="@+id/btn7d"
+            style="@style/FilterButtonStyle"
+            android:text="7d"
+            android:layout_marginStart="24dp"
+            />
+
+        <RadioButton
+            android:id="@+id/btn30d"
+            style="@style/FilterButtonStyle"
+            android:text="30d"
+            android:layout_marginStart="24dp"/>
+    </RadioGroup>
 
     <TextView
         android:id="@+id/tv_percentage"
@@ -122,17 +108,28 @@
         app:layout_constraintEnd_toEndOf="@+id/tv_percentage"
         app:layout_constraintTop_toTopOf="@+id/tv_percentage" />
 
-    <com.github.mikephil.charting.charts.LineChart
-        android:id="@+id/chart"
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_chart"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
-        android:layout_marginStart="24dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="24dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="6dp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tv_one_day" />
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup">
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/chart"
+            android:layout_width="match_parent"
+            android:layout_height="280dp"
+            android:layout_margin="16dp"
+            app:layout_constraintEnd_toEndOf="@id/cv_chart"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@id/cv_chart"
+            app:layout_constraintTop_toTopOf="@id/cv_chart"
+            app:layout_constraintBottom_toBottomOf="@id/cv_chart"  />
+    </androidx.cardview.widget.CardView>
 
     <TextView
         android:id="@+id/tv_empty_message"
@@ -181,7 +178,7 @@
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/chart" />
+        app:layout_constraintTop_toBottomOf="@id/cv_chart" />
 
     <TextView
         android:id="@+id/tv_open_label"

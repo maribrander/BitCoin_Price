@@ -1,10 +1,13 @@
 package com.example.bitcoin_price
 
 import android.annotation.SuppressLint
+import android.content.res.Configuration
+import android.graphics.Color
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
+import android.widget.RadioGroup
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
@@ -12,7 +15,6 @@ import androidx.activity.viewModels
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.constraintlayout.widget.Group
-import androidx.core.content.ContextCompat
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.bitcoin_price.data.MarketPriceValueEntity
@@ -24,7 +26,6 @@ import com.github.mikephil.charting.data.LineDataSet
 import com.github.mikephil.charting.utils.ColorTemplate
 import java.text.NumberFormat
 import java.util.Locale
-
 
 class Homescreen : AppCompatActivity() {
 
@@ -46,7 +47,6 @@ class Homescreen : AppCompatActivity() {
     private lateinit var imArrowDown: ImageView
     private lateinit var imArrowUp: ImageView
 
-
     @SuppressLint("SetTextI18n")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -64,9 +64,7 @@ class Homescreen : AppCompatActivity() {
         val bitcoinPrice = findViewById<TextView>(R.id.tv_title_price)
         val aboutChart = findViewById<TextView>(R.id.tv_title_aboutchart)
         val aboutChartDescription = findViewById<TextView>(R.id.tv_aboutchart_description)
-        val btn1D = findViewById<TextView>(R.id.tv_one_day)
-        val btn7D = findViewById<TextView>(R.id.tv_seven_days)
-        val btn30D = findViewById<TextView>(R.id.tv_thirty_days)
+        val radioGroup = findViewById<RadioGroup>(R.id.radioGroup)
 
         tvOpen = findViewById<TextView>(R.id.tv_open)
         tvHigh = findViewById<TextView>(R.id.tv_high)
@@ -149,10 +147,20 @@ class Homescreen : AppCompatActivity() {
             }
 
         }
-
-        btn1D.setOnClickListener { onFilterSelected(1) }
-        btn7D.setOnClickListener { onFilterSelected(7) }
-        btn30D.setOnClickListener { onFilterSelected(30) }
+        
+        radioGroup.setOnCheckedChangeListener { _, checkedId ->
+            when (checkedId) {
+                R.id.btn1d -> {
+                    onFilterSelected(1)
+                }
+                R.id.btn7d -> {
+                    onFilterSelected(7)
+                }
+                R.id.btn30d -> {
+                    onFilterSelected(30)
+                }
+            }
+        }
     }
 
     fun onFilterSelected(days: Int) {
@@ -165,9 +173,19 @@ class Homescreen : AppCompatActivity() {
             description.isEnabled = false
             xAxis.position = XAxis.XAxisPosition.BOTTOM
             axisRight.isEnabled = false
-            axisLeft.setDrawGridLines(false)
+            axisLeft.setDrawGridLines(true)
             xAxis.setDrawGridLines(false)
             xAxis.setDrawLabels(false)
+
+            val isDarkMode = resources.configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
+
+            val textColor = if (isDarkMode) Color.WHITE else Color.BLACK
+
+            xAxis.textColor = textColor
+            axisLeft.textColor = textColor
+            axisRight.textColor = textColor
+            legend.textColor = textColor
+
 
             //Configuração do marcador personalizado
 
@@ -177,7 +195,6 @@ class Homescreen : AppCompatActivity() {
             marker = markerView
         }
     }
-
     // Atualiza o gráfico com novos dados recebidos da API
     private fun updateChart(values: List<MarketPriceValueEntity>) {
         chartEntries.clear()
@@ -193,14 +210,12 @@ class Homescreen : AppCompatActivity() {
             setDrawCircles(true)
             setDrawValues(false)
             setDrawFilled(true)
-
         }
 
         //atualiza com novos dados e redesenha.
-        chart.data = LineData(dataSet)
+        val data = LineData(dataSet)
+        chart.data = data
         chart.invalidate()
-
-
     }
 
     private fun calculateStats(values: List<MarketPriceValueEntity>): Map<String, Any> {

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="FilterButtonStyle">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@drawable/text_color_selector</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:background">@drawable/selector_textview_background</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:button">@null</item>
+
+    </style>
+
+    <!-- Estilo para o botão no modo claro -->
+    <style name="ButtonStyle.Light" parent="Widget.AppCompat.Button">
+        <item name="android:background">@android:color/transparent</item>
+        <item name="android:textColor">@android:color/black</item>
+    </style>
+</resources>
