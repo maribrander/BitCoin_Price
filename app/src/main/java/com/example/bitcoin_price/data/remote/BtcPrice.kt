@@ -1,7 +1,4 @@
-package com.example.bitcoin_price.data
-
-
-
+package com.example.bitcoin_price.data.remote
 
 data class MarketPriceResponse (
     val description:String,

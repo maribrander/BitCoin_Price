@@ -1,19 +1,346 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:gravity="center"
-    android:orientation="vertical"
-    tools:context=".MainActivity">
+    tools:context=".ui.main.MainActivity">
+
+    <androidx.constraintlayout.widget.Group
+        android:id="@+id/data_group"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        app:constraint_referenced_ids="tv_aboutchart_description,tv_title_price_label,tv_title_price,radioGroup,tv_percentage, im_arrow_down, im_arrow_up,cv_chart,tv_price_label,tv_open_label,tv_high_label,tv_average_label,tv_open,tv_high,tv_average,vertical_guideline,tv_close_label,tv_low_label,tv_change_label,tv_close,tv_low,tv_change,tv_title_aboutchart" />
+
+    <TextView
+        android:id="@+id/tv_aboutchart_description"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
+        android:text="@string/chart_description"
+        android:textColor="@color/text_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_title_aboutchart" />
+
+    <TextView
+        android:id="@+id/tv_title_price_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:text="@string/btc_title"
+        android:textColor="@color/text_color"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_title_price"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:textColor="@color/text_color"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_price_label"
+        tools:text="$68,837.59" />
+
+    <RadioGroup
+        android:id="@+id/radioGroup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="84dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="@id/tv_title_price"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_price">
+
+        <RadioButton
+            android:id="@+id/btn1d"
+            style="@style/FilterButtonStyle"
+            android:text="1d" />
+
+        <RadioButton
+            android:id="@+id/btn7d"
+            style="@style/FilterButtonStyle"
+            android:layout_marginStart="24dp"
+            android:text="7d" />
+
+        <RadioButton
+            android:id="@+id/btn30d"
+            style="@style/FilterButtonStyle"
+            android:layout_marginStart="24dp"
+            android:text="30d" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/tv_percentage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="24dp"
+        android:textColor="@color/text_color"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:text="41.78%" />
 
     <ImageView
-        android:id="@+id/logo_bitcoin"
-        android:layout_width="150dp"
-        android:layout_height="150dp"
-        app:srcCompat="@drawable/logo_lightmode" />
+        android:id="@+id/im_arrow_down"
+        android:layout_width="47dp"
+        android:layout_height="49dp"
+        android:layout_marginEnd="50dp"
+        android:src="@drawable/ic_arrow_down"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_percentage"
+        app:layout_constraintEnd_toEndOf="@+id/tv_percentage"
+        app:layout_constraintTop_toTopOf="@+id/tv_percentage" />
+
+    <ImageView
+        android:id="@+id/im_arrow_up"
+        android:layout_width="47dp"
+        android:layout_height="49dp"
+        android:layout_marginEnd="50dp"
+        android:src="@drawable/ic_arrow_up"
+        app:layout_constraintBottom_toBottomOf="@+id/tv_percentage"
+        app:layout_constraintEnd_toEndOf="@+id/tv_percentage"
+        app:layout_constraintTop_toTopOf="@+id/tv_percentage" />
 
 
-</LinearLayout>
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cv_chart"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="6dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/radioGroup">
+
+        <com.github.mikephil.charting.charts.LineChart
+            android:id="@+id/chart"
+            android:layout_width="match_parent"
+            android:layout_height="280dp"
+            android:layout_margin="16dp"
+            app:layout_constraintBottom_toBottomOf="@id/cv_chart"
+            app:layout_constraintEnd_toEndOf="@id/cv_chart"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@id/cv_chart"
+            app:layout_constraintTop_toTopOf="@id/cv_chart" />
+    </androidx.cardview.widget.CardView>
+
+    <TextView
+        android:id="@+id/tv_empty_message"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="120dp"
+        android:layout_marginEnd="8dp"
+        android:text="@string/empty_message"
+        android:textAlignment="center"
+        android:textColor="@color/text_color"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/im_empty_State"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:src="@drawable/ic_empty_state"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/bt_retry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="100dp"
+        android:backgroundTint="@color/black"
+        android:text="@string/btn_retry"
+        android:textColor="@color/button_text_color"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_price_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="24dp"
+        android:text="Price"
+        android:textColor="@color/text_color"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cv_chart" />
+
+    <TextView
+        android:id="@+id/tv_open_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Open"
+        android:textColor="@color/text_color"
+        app:layout_constraintStart_toStartOf="@+id/tv_price_label"
+        app:layout_constraintTop_toBottomOf="@+id/tv_price_label" />
+
+    <TextView
+        android:id="@+id/tv_high_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="High"
+        android:textColor="@color/text_color"
+        app:layout_constraintStart_toStartOf="@+id/tv_price_label"
+        app:layout_constraintTop_toBottomOf="@+id/tv_open_label" />
+
+    <TextView
+        android:id="@+id/tv_average_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Average"
+        android:textColor="@color/text_color"
+        app:layout_constraintStart_toStartOf="@+id/tv_price_label"
+        app:layout_constraintTop_toBottomOf="@+id/tv_high_label" />
+
+    <TextView
+        android:id="@+id/tv_open"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:maxLength="11"
+        android:textColor="@color/text_color"
+        app:layout_constraintEnd_toStartOf="@+id/vertical_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/tv_price_label"
+        tools:text="$0" />
+
+    <TextView
+        android:id="@+id/tv_high"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:maxLength="11"
+        android:textColor="@color/text_color"
+        app:layout_constraintEnd_toStartOf="@+id/vertical_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/tv_open"
+        tools:text="$0" />
+
+    <TextView
+        android:id="@+id/tv_average"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:maxLength="11"
+        android:textColor="@color/text_color"
+        app:layout_constraintEnd_toStartOf="@+id/vertical_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/tv_high"
+        tools:text="$0" />
+
+    <androidx.constraintlayout.widget.Guideline
+        android:id="@+id/vertical_guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_begin="199dp"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <TextView
+        android:id="@+id/tv_close_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Close"
+        android:textColor="@color/text_color"
+        app:layout_constraintStart_toEndOf="@id/vertical_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/tv_price_label" />
+
+    <TextView
+        android:id="@+id/tv_low_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Low"
+        android:textColor="@color/text_color"
+        app:layout_constraintStart_toEndOf="@id/vertical_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/tv_open_label" />
+
+    <TextView
+        android:id="@+id/tv_change_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:text="Change"
+        android:textColor="@color/text_color"
+        app:layout_constraintStart_toEndOf="@id/vertical_guideline"
+        app:layout_constraintTop_toBottomOf="@+id/tv_high_label" />
+
+    <TextView
+        android:id="@+id/tv_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:maxLength="11"
+        android:textColor="@color/text_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_price_label"
+        tools:text="$0" />
+
+    <TextView
+        android:id="@+id/tv_low"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:maxLength="11"
+        android:textColor="@color/text_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_close"
+        tools:text="$0" />
+
+    <TextView
+        android:id="@+id/tv_change"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:maxLength="11"
+        android:textColor="@color/text_color"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_low"
+        tools:text="$0" />
+
+    <TextView
+        android:id="@+id/tv_title_aboutchart"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginTop="16dp"
+        android:text="@string/about_chart_title"
+        android:textColor="@color/text_color"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_average_label" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

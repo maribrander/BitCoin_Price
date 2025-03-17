@@ -4,4 +4,7 @@
         <!-- Defina o estilo de botão para o modo escuro -->
         <item name="buttonStyle">@style/ButtonStyle.Night</item>
     </style>
+
+
+
 </resources>
