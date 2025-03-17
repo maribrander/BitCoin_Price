@@ -1,9 +1,10 @@
-package com.example.bitcoin_price.data
+package com.example.bitcoin_price.data.local
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+
 
 @Database(entities = [MarketPriceValueEntity::class], version = 1)
 abstract class BtcDataBase : RoomDatabase() {
@@ -26,4 +27,3 @@ abstract class BtcDataBase : RoomDatabase() {
         }
     }
 }
-

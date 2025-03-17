@@ -1,4 +1,4 @@
-package com.example.bitcoin_price.data
+package com.example.bitcoin_price.data.local
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
@@ -9,5 +9,3 @@ data class MarketPriceValueEntity(
     val timestamp: Long,
     val price: Double
 )
-
-

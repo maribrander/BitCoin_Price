@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">Bitcoin Price</string>
     <string name="empty_message">Sorry. We are having some issues to display the data. Please, try to refresh the page!</string>
+    <string name="alert_dialog_title">Ops! Something went wrong</string>
+    <string name="alert_dialog_message">We could not establish a connection with our server.
+        If you want to see outdated data, you can cancel or try to connect again! </string>
+    <string name="alert_dialog_positive_button">Try Again</string>
+    <string name="alert_dialog_negative_button">Cancel</string>
+    <string name="chart_description">Average USD market price across major Bitcoin exchanges.</string>
+    <string name="btc_title">BitCoin(BTC)</string>
+    <string name="btn_retry">RETRY</string>
+    <string name="about_chart_title">About Chart</string>
+
 </resources>

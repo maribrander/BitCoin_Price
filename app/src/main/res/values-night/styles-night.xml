@@ -2,7 +2,9 @@
 <resources>
     <!-- Estilo para o botão no modo escuro -->
     <style name="ButtonStyle.Night" parent="Widget.AppCompat.Button">
-        <item name="android:background">@android:color/transparent</item>
+        <item name="android:background">@android:color/white</item>
         <item name="android:textColor">@android:color/white</item>
     </style>
+    
+
 </resources>
