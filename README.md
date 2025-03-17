@@ -63,7 +63,7 @@ cd bitcoin-price
 ## 👨‍💻 Equipe de Desenvolvimento
 
 👥 **Equipe 6:**
- - Mariana Brandão
+ - Mariana Brander
  - Felipe Mazetti
  - Gabriel Erick
  
